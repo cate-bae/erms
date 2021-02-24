@@ -277,7 +277,7 @@ class Employees_model extends CI_Model {
                 ->get()
                 ->result();
 
-        return empty($query) ? [] : array_column($query, 'benefit_id');
+        return empty($query) ? [] : array_column_obj($query, 'benefit_id');
     }
 
     public function get_employee_names()
