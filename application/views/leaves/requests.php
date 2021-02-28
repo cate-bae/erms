@@ -102,10 +102,12 @@
                                 <input type="hidden" name="id" class="hide">
                                 <div class="modal-body">
                                     <div class="form-group m-b-0">
-                                        <label class="col-md-12">Leave Credits as of</label>
-                                        <div class="col-md-12">
-                                            <div class="form-line demo-masked-input">
-                                                <input name="leave_credit_as_of" type="text" class="form-control date" placeholder="mm/dd/yyyy" value="<?=date('m/d/Y')?>">
+                                        <div class="col-md-12 m-b-0">
+                                            <div class="input-group m-b-0 demo-masked-input">
+                                                <span class="input-group-addon">Leave Credits as of</span>
+                                                <div class="form-line">
+                                                    <input name="leave_credit_as_of" type="text" class="form-control date" placeholder="mm/dd/yyyy" value="<?=date('m/d/Y')?>">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -156,27 +158,29 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group m-b-0">
+                                    <div class="form-group">
                                         <label class="col-md-12">Recommendation</label>                                                    
                                         <div class="col-md-12 m-l-30 m-b-0">
                                             <input name="recommendation" type="radio" id="approval" class="radio-col-teal" checked value="Approval"/>
                                             <label for="approval">Approval</label>
-                                            <div class="m-l-30 approval">
-                                                <label class="col-md-12">Approved for</label>
-                                                <div class="col-md-6">
-                                                    <div class="input-group m-b-0">
-                                                        <div class="form-line">
-                                                            <input name="days_with_pay" type="number" class="form-control">
-                                                        </div>
-                                                        <span class="input-group-addon">days with pay</span>
+                                            <div class="approval">
+                                                <div class="form-group m-b-0">
+                                                    <label class="col-md-12">Approved for</label>
+                                                    <div class="col-md-6">
+                                                        <div class="input-group m-b-0">
+                                                            <div class="form-line">
+                                                                <input name="days_with_pay" type="number" class="form-control">
+                                                            </div>
+                                                            <span class="input-group-addon">days with pay</span>
+                                                        </div>    
                                                     </div>    
-                                                </div>    
-                                                <div class="col-md-6">
-                                                    <div class="input-group m-b-0">
-                                                        <div class="form-line">
-                                                            <input name="days_without_pay" type="number" class="form-control">
+                                                    <div class="col-md-6">
+                                                        <div class="input-group m-b-0">
+                                                            <div class="form-line">
+                                                                <input name="days_without_pay" type="number" class="form-control">
+                                                            </div>
+                                                            <span class="input-group-addon">days without pay</span>
                                                         </div>
-                                                        <span class="input-group-addon">days without pay</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -339,15 +343,15 @@
                                         <th>Recommendation</th>
                                         <td id="view_recommendation"></td>
                                     </tr>
-                                    <tr class="approval">
+                                    <tr class="view_approval">
                                         <th>Approved for</th>
                                         <td id="view_approval"></td>
                                     </tr>
-                                    <tr class="disapproval">
+                                    <tr class="view_disapproval">
                                         <th>Disapproval due to</th>
                                         <td id="view_disapproval_reason"></td>
                                     </tr>
-                                    <tr class="disapproval">
+                                    <tr class="view_disapproval">
                                         <th>Disapproved due to</th>
                                         <td id="view_disapproved_reason"></td>
                                     </tr>

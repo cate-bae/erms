@@ -78,17 +78,17 @@ function viewRemarks (id) {
 
             $('#view_recommendation').text(data.recommendation);
             if (data.recommendation == 'Approval') {
-                $('.approval').show();
-                $('.disapproval').hide();
+                $('.view_approval').show();
+                $('.view_disapproval').hide();
                 $('#view_approval').text(data.days_with_pay + ' days with pay, ' + data.days_without_pay + ' days without pay');
             } else if (data.recommendation == 'Disapproval') {
-                $('.disapproval').show();
-                $('.approval').hide();
+                $('.view_disapproval').show();
+                $('.view_approval').hide();
                 $('#view_disapproval_reason').text(data.disapproval_reason);
                 $('#view_disapproved_reason').text(data.disapproved_reason);
             } else {
-                $('.approval').hide();
-                $('.disapproval').hide();
+                $('.view_approval').hide();
+                $('.view_disapproval').hide();
             }
 
             if (data.recommendation != '' && result.data.employees) {
