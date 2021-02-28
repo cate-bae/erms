@@ -8,6 +8,7 @@ class Leave_requests extends CI_Controller
 		parent::__construct();
 		is_logged_in();
 		$this->load->model('leaves/Leave_requests_model', 'Leave_requests_model');
+		$this->load->model('Employees_model');
 	}
 
 	public function index()
@@ -24,13 +25,37 @@ class Leave_requests extends CI_Controller
 			base_url('assets/plugins/jquery-datatable/jquery.dataTables.js'),
 			base_url('assets/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js'),
 			base_url('assets/js/pages/tables.js'),
-			base_url('assets/js/leaves/requests.js')
+			base_url('assets/js/leaves/requests.js'),
+			base_url('assets/plugins/jquery-inputmask/jquery.inputmask.bundle.js')
 		];
 
 		$page_data['list'] = $this->Leave_requests_model->all();
 
+		$page_data['employees'] = set_key_obj($this->Employees_model->all_names(), 'id');
+
 		$data['body'] = $this->load->view('leaves/requests', $page_data, true);
 		$this->load->view('index', $data);
+	}
+
+	public function info($id)
+	{
+		$data = $this->Leave_requests_model->get(['id' => $id]);
+
+		if (empty($data))
+		{
+			json_response(FALSE, 'Leave request does not exist.');
+		}
+
+		$employees = [];
+		if ($data->recommendation != '')
+		{
+			$employees = set_key_obj($this->Employees_model->get_leave_employees([$data->user_id, $data->dept_head_id, $data->authorized_officer_id]), 'id');
+		}
+		else 
+		{
+			$employees = set_key_obj($this->Employees_model->get_leave_employees([$data->user_id]), 'id');
+		}
+		json_response(TRUE, '', ['leave' => $data, 'employees' => $employees]);
 	}
 
 	public function add()
@@ -104,7 +129,51 @@ class Leave_requests extends CI_Controller
 			json_response(FALSE, 'User cannot not update leave type');
 		}
 		
-		$data = parse_data($_POST, ['status', 'remarks']);
+		$leave = $this->Leave_requests_model->get(['id' => $id]);
+		if (empty($leave))
+		{
+			json_response(FALSE, 'Leave request does not exist');
+		}
+
+		if ($leave->recommendation != '')
+		{
+			json_response(FALSE, 'There is already '.$leave->recommendation.' action. ');
+		}
+
+		$fields = [
+			'recommendation',
+			'dept_head_id',
+			'authorized_officer_id'
+		];
+
+		if ($this->input->post('recommendation') == 'Approval')
+		{
+			$fields[] = 'days_with_pay';
+			$fields[] = 'days_without_pay';
+		}
+		else
+		{
+			$fields[] = 'disapproval_reason';
+			$fields[] = 'disapproved_reason';
+		}
+
+		$empty_fields = has_empty_post($fields);
+		if ($empty_fields) 
+		{	
+			json_response(FALSE, 'Fill in the required fields', ['fields' => $empty_fields]);
+		}
+		
+		$data = parse_data($_POST, $fields);
+
+		foreach ($data as $key => $field)
+		{
+			if ($field === '') 
+			{
+				json_response(FALSE, 'Fill in the required fields', ['fields' => [$key]]);
+			}
+		}
+
+		$data['operator'] = $this->session->userdata('logged_in')['id'];
 
 		$this->Leave_requests_model->update($data, $id);
 		

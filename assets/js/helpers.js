@@ -1,4 +1,12 @@
-﻿
+﻿$(document).on("keypress", "input.decimal", function(event){
+    var charCode = event.charCode
+
+    if ((charCode > 31 && (charCode < 48 || charCode > 57) && charCode !== 46) ||
+        (event.target.value.indexOf('.') > -1 && charCode === 46)) {
+        return false;
+    }
+});
+
 $(document).on("keypress", "[type='number']", function(event){
     return event.charCode >= 48 && event.charCode <= 57 || event.key === "Backspace";
 });
@@ -199,3 +207,34 @@ var resizeImage = function (settings) {
         reader.readAsDataURL(file);
     });
 };
+
+function leave_types()
+{
+    return [
+        'Vacation',
+        'Sick',
+        'Maternity / Paternity',
+        'Others (Specify)'
+    ];
+}
+
+function get_name(name)
+{
+    name_string = name.first_name;
+
+    if (name.middle_name) 
+    {
+        name_string += ' ' + (name.middle_name, 0, 1) + '.';
+    }
+
+    if (name.last_name)
+    {
+        name_string += ' ' + name.last_name;
+    }
+
+    if (name.ext_name)
+    {
+        name_string += ' ' + name.ext_name;
+    }
+    return name_string;
+}

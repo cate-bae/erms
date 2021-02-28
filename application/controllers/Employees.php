@@ -861,10 +861,9 @@ class Employees extends CI_Controller
 				return $data;
 
 			case 'leaves':
-				$this->load->model('leaves/Leave_types_model', 'Leave_types_model');
+				// $this->load->model('leaves/Leave_types_model', 'Leave_types_model');
 				$this->Employees_model->generate_leave($user_id);
 				$data = [
-					'types'      => $this->Leave_types_model->all(),
 					'leaves'     => $this->Employees_model->get_leaves($user_id),
 					'leave_info' => $this->Employees_model->get_leave_info($user_id),
 					'general'    => $this->Employees_model->get_general($user_id)

@@ -1098,12 +1098,46 @@ class Update_employee extends CI_Controller
 		$user_id = (int) $user_id;
         $this->validate($user_id);
 		$fields = [
-			'date',
+			'agency',
+			'date_filing',
+			'salary',
 			'type',
-			'reason'
+			'days',
+			'date_from',
+			'date_to',
+			'purpose',
+			'commutation'
 		];
 		
 		$empty_fields = has_empty_post($fields);
+
+		if ($this->input->post('type') == 0)
+		{
+			$fields[] = 'type_vacation';
+			if ($this->input->post('type_vacation') == 'Others (Specify)') 
+			{
+				$fields[] = 'type_vacation_others';
+			}
+
+			$fields[] = 'location';
+			if ($this->input->post('location') == 'Abroad (Specify)') 
+			{
+				$fields[] = 'location_abroad';
+			}
+		}
+		else if ($this->input->post('type') == 1)
+		{
+			if ($this->input->post('location_sick') == '1') 
+			{
+				$fields[] = 'location_sick';
+				$fields[] = 'location_sick_hospital';
+			}
+		}
+		else if ($this->input->post('type') == 3)
+		{
+			$fields[] = 'type_others';
+		}
+
 		if ($empty_fields) 
 		{	
 			json_response(FALSE, 'Fill in the required fields', ['fields' => $empty_fields]);
@@ -1111,7 +1145,15 @@ class Update_employee extends CI_Controller
 		
 		$data = parse_data($_POST, $fields);
 
-		if (strtotime($data['date']) < time())
+		foreach ($data as $key => $field)
+		{
+			if ($field === '') 
+			{
+				json_response(FALSE, 'Fill in the required fields', ['fields' => [$key]]);
+			}
+		}
+
+		if (strtotime($data['date_from']) < time() || strtotime($data['date_to']) < time())
 		{
 			json_response(FALSE, 'Date entered is already passed.');
 		}

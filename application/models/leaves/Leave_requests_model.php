@@ -31,9 +31,8 @@ class Leave_requests_model extends CI_Model {
 
     public function all()
     {
-        return $this->db->select('r.*, t.name as type_name, CONCAT(u.last_name, ", ", u.first_name, " ", u.middle_name, " ", u.ext_name) as employee_name')
+        return $this->db->select('r.*, CONCAT(u.last_name, ", ", u.first_name, " ", u.middle_name, " ", u.ext_name) as employee_name')
                     ->from('leave_requests r')
-                    ->join('leave_types t', 'r.type = t.id')
                     ->join('users u', 'r.user_id = u.id')
                     ->where('u.deleted', 0)
                     ->order_by('create_time', 'DESC')

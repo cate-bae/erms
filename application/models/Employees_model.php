@@ -72,6 +72,16 @@ class Employees_model extends CI_Model {
                     ->result();
     }
 
+    public function all_names()
+    {
+        return $this->db->select('id, first_name, middle_name, last_name, ext_name')
+                    ->from('users')
+                    ->where('deleted', 0)
+                    ->where('type!=', -1)
+                    ->get()
+                    ->result();
+    }
+
     public function get_info($user_id)
     {
         return $this->db->select('u.*, d.name as department_name, p.name as position_name')
@@ -82,6 +92,18 @@ class Employees_model extends CI_Model {
                     ->where('deleted', 0)
                     ->get()
                     ->row();
+    }
+
+    public function get_leave_employees($user_ids)
+    {
+        return $this->db->select('u.*, d.name as department_name, p.name as position_name')
+                    ->from('users u')
+                    ->join('department d', 'u.department_id=d.id', 'LEFT')
+                    ->join('position p', 'u.position_id=p.id', 'LEFT')
+                    ->where_in('u.id', $user_ids)
+                    ->where('deleted', 0)
+                    ->get()
+                    ->result();
     }
 
     public function delete($table, $where = [])
@@ -313,10 +335,9 @@ class Employees_model extends CI_Model {
 
     public function get_leaves($user_id)
     {
-        return $this->db->select('r.*, t.name as type_name')
-                    ->from('leave_requests r')
-                    ->join('leave_types t', 'r.type = t.id', 'LEFT')
-                    ->where('r.user_id', $user_id)
+        return $this->db->select('*')
+                    ->from('leave_requests')
+                    ->where('user_id', $user_id)
                     ->order_by('create_time', 'DESC')
                     ->get()
                     ->result();

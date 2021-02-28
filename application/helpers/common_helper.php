@@ -129,6 +129,8 @@ function parse_data($input, $fields)
 
 function set_key_obj(array $array, $key)
 {
+    if (empty($array)) return [];
+    
     if (!$array || !is_array($array)) {
         die("Array required on set_key function.");
     }
@@ -545,5 +547,58 @@ function get_page_title($view)
         return '';
     }
     return $data[$view];
+}
+
+function leave_types()
+{
+    return [
+        'Vacation',
+        'Sick',
+        'Maternity / Paternity',
+        'Others (Specify)'
+    ];
+}
+
+function leave_sub($leave_type)
+{
+    if ($leave_type == 'Vacation')
+    {
+        return [
+            'To seek employment',
+            'Others (Specify)' => 1
+        ];
+    }
+
+    if ($leave_type == 'Others (Specify)')
+    {
+        return [
+            'CTO',
+            'SPL',
+            'Solo Parent'
+        ];
+    }
+
+    return [];
+}
+
+function get_name($name)
+{
+    $name_string = $name->first_name;
+
+    if ($name->middle_name) 
+    {
+        $name_string .= ' '.substr($name->middle_name, 0, 1).'.';
+    }
+
+    if ($name->last_name)
+    {
+        $name_string .= ' '.$name->last_name;
+    }
+
+    if ($name->ext_name)
+    {
+        $name_string .= ' '.$name->ext_name;
+    }
+    return strtoupper($name_string);
 }
 ?>

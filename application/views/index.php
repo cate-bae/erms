@@ -175,18 +175,10 @@
                     </li>
                     
                     <li>
-                        <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
+                        <a href="<?=base_url()?>leaves/Leave_requests" class="<?php if (isset($nav_active) && $nav_active == 'leaves') { echo 'active'; } ?>">
                             <i class="material-icons">event_note</i>
-                            <span>Leave</span>
+                            <span>Leave Requests</span>
                         </a>
-                        <ul class="ml-menu <?php if (isset($nav_active) && $nav_active == 'leaves') { echo 'active'; } ?>">
-                            <li class="<?php if (isset($sub_nav_active) && $sub_nav_active == 'leave_requests') { echo 'active'; } ?>">
-                                <a href="<?=base_url()?>leaves/Leave_requests" class=" waves-effect waves-block">Requests</a>
-                            </li>
-                            <li class="<?php if (isset($sub_nav_active) && $sub_nav_active == 'leave_types') { echo 'active'; } ?>">
-                                <a href="<?=base_url()?>leaves/Leave_types" class=" waves-effect waves-block">Types</a>
-                            </li>
-                        </ul>
                     </li>
 
                     <li class="<?php if (isset($nav_active) && $nav_active == 'benefits') { echo 'active'; } ?>">
