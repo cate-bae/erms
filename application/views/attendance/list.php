@@ -291,7 +291,7 @@
                         <div class="input-group m-b-0">
                             <span class="input-group-addon">From</span>
                             <div class="form-line demo-masked-input">
-                                <input name="from" type="text" class="form-control date" placeholder="mm/dd/yyyy">
+                                <input name="from" type="text" class="form-control date-export" placeholder="mm/dd/yyyy">
                             </div>
                         </div>
                     </div>
@@ -299,7 +299,7 @@
                         <div class="input-group m-b-0">
                             <span class="input-group-addon">To</span>
                             <div class="form-line demo-masked-input">
-                                <input name="to" type="text" class="form-control date" placeholder="mm/dd/yyyy">
+                                <input name="to" type="text" class="form-control date-export" placeholder="mm/dd/yyyy">
                             </div>
                         </div>
                     </div>

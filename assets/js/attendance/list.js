@@ -38,7 +38,8 @@ function editAttendance (info) {
 }
 
 $(function () {
-    $('.demo-masked-input').find('.date').inputmask('mm-dd-yyyy', { placeholder: '__/__/____' });
+    $('.demo-masked-input').find('.date').inputmask('mm/dd/yyyy', { placeholder: '__/__/____' });
+    $('.demo-masked-input').find('.date-export').inputmask('mm-dd-yyyy', { placeholder: '__/__/____' });
     $('.time-masked-input').find('.time').inputmask('hh:mm t', { placeholder: '__:__ _m', alias: 'time12', hourFormat: '12' });
     $('form').submit(function (e) {
         e.preventDefault();
