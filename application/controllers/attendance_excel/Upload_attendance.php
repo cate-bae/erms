@@ -21,7 +21,7 @@ class Upload_attendance extends CI_Controller
         $user_data = $this->Employees_model->get('users', ['id' => $user_id], 'biometrics_id');
         if (empty((int) $user_data->biometrics_id))
         {
-            json_response(TRUE, 'Please provide employee\'s biometrics id before uploading.');
+            json_response(FALSE, 'Please provide employee\'s biometrics id before uploading.');
         }
 
         $file = upload_file('xlsx');
