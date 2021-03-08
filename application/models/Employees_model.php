@@ -327,7 +327,7 @@ class Employees_model extends CI_Model {
         return $this->db->select('*')
                 ->from('attendance')
                 ->where('user_id', $user_id)
-                ->where("STR_TO_DATE(date,'%m/%d/%Y') BETWEEN STR_TO_DATE('{$from}','%m-%d-%Y') AND STR_TO_DATE('{$to}','%m-%d-%Y')")
+                ->where("(STR_TO_DATE(date,'%m/%d/%Y') BETWEEN STR_TO_DATE('{$from}','%m-%d-%Y') AND STR_TO_DATE('{$to}','%m-%d-%Y') OR STR_TO_DATE(date,'%m-%d-%Y') BETWEEN STR_TO_DATE('{$from}','%m-%d-%Y') AND STR_TO_DATE('{$to}','%m-%d-%Y'))")
                 ->order_by('date')
                 ->get()
                 ->result();

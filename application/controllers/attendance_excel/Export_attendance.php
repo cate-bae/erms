@@ -110,10 +110,16 @@ class Export_attendance extends CI_Controller
             json_response(FALSE, 'Please provide period of attendance.');
         }
 
+        $from = str_replace('-','/', $from);
+        $to = str_replace('-','/', $to);
+        
         if (strtotime($from) > strtotime($to))
         {
             json_response(FALSE, 'Invalid period of attendance provided');
         }
+
+        $from = str_replace('/','-', $from);
+        $to = str_replace('/','-', $to);
 
         $info = $this->Employees_model->get_info($user_id);
         $data = $this->Employees_model->get_attendance_range($user_id, $from, $to);
@@ -197,10 +203,15 @@ class Export_attendance extends CI_Controller
             json_response(FALSE, 'Please provide period of attendance.');
         }
 
+        $from = str_replace('-','/', $from);
+        $to = str_replace('-','/', $to);
+
         if (strtotime($from) > strtotime($to))
         {
             json_response(FALSE, 'Invalid period of attendance provided');
         }
+        $from = str_replace('/','-', $from);
+        $to = str_replace('/','-', $to);
         
         $this->load->model(['Attendance_model']);
         $spreadsheet = new Spreadsheet();
@@ -238,6 +249,9 @@ class Export_attendance extends CI_Controller
         {
             json_response(FALSE, 'Please provide dates.');
         }
+
+        $from = str_replace('-','/', $from);
+        $to = str_replace('-','/', $to);
 
         if (strtotime($from) > strtotime($to))
         {

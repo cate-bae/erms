@@ -71,7 +71,7 @@ class Attendance_model extends CI_Model {
                     ->from('attendance a')
                     ->join('users u', 'a.user_id = u.id')
                     ->where('u.deleted', 0)
-                    ->where("STR_TO_DATE(date,'%m/%d/%Y') BETWEEN STR_TO_DATE('{$from}','%m-%d-%Y') AND STR_TO_DATE('{$to}','%m-%d-%Y')")
+                    ->where("(STR_TO_DATE(date,'%m/%d/%Y') BETWEEN STR_TO_DATE('{$from}','%m-%d-%Y') AND STR_TO_DATE('{$to}','%m-%d-%Y') OR STR_TO_DATE(date,'%m-%d-%Y') BETWEEN STR_TO_DATE('{$from}','%m-%d-%Y') AND STR_TO_DATE('{$to}','%m-%d-%Y'))")
                     ->order_by("UNIX_TIMESTAMP(STR_TO_DATE(date,'%m/%d/%Y'))")
                     ->get()
                     ->result();
